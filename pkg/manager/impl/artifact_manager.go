@@ -202,6 +202,12 @@ func (m *artifactManager) GetArtifact(ctx context.Context, request datacatalog.G
 	}, nil
 }
 
+func ListArtifacts(ctx context.Context, request datacatalog.ListArtifactsRequest) (*datacatalog.ListArtifactsResponse, error) {
+	// query = generate_db_query(request.filterExpression)
+	// artifacts = artifactsRepo.list(query)
+	return &datacatalog.ListArtifactsResponse{}, nil
+}
+
 func NewArtifactManager(repo repositories.RepositoryInterface, store *storage.DataStore, storagePrefix storage.DataReference, artifactScope promutils.Scope) interfaces.ArtifactManager {
 	artifactMetrics := artifactMetrics{
 		scope:                    artifactScope,
