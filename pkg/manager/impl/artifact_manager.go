@@ -13,6 +13,7 @@ import (
 	"github.com/lyft/datacatalog/pkg/repositories/models"
 	"github.com/lyft/datacatalog/pkg/repositories/transformers"
 
+	"github.com/lyft/datacatalog/pkg/repositories/utils"
 	"github.com/lyft/flytestdlib/contextutils"
 	"github.com/lyft/flytestdlib/logger"
 	"github.com/lyft/flytestdlib/promutils"
@@ -202,9 +203,16 @@ func (m *artifactManager) GetArtifact(ctx context.Context, request datacatalog.G
 	}, nil
 }
 
-func ListArtifacts(ctx context.Context, request datacatalog.ListArtifactsRequest) (*datacatalog.ListArtifactsResponse, error) {
-	// query = generate_db_query(request.filterExpression)
-	// artifacts = artifactsRepo.list(query)
+func (m *artifactManager) ListArtifacts(ctx context.Context, request datacatalog.ListArtifactsRequest) (*datacatalog.ListArtifactsResponse, error) {
+	query, err := utils.ConstructListInput(ctx, request.GetFilter())
+
+	if err != nil {
+
+	}
+
+	artifacts, err := m.repo.ArtifactRepo().List(ctx, query)
+
+	// transform array into datacatalog artifacts and return back
 	return &datacatalog.ListArtifactsResponse{}, nil
 }
 
